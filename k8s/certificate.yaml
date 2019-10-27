@@ -1,9 +1,9 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  name: novopattern-com-tls
+  name: novopattern-dot-com-tls
 spec:
-  secretName: novopattern-com
+  secretName: novopattern-dot-com
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
