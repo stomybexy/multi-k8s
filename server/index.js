@@ -11,18 +11,23 @@ app.use(bodyParser.json());
 
 // Postgres Client Setup
 const { Pool } = require('pg');
-const pgClient = new Pool({
-    user: keys.pgUser,
-    password: keys.pgPassword,
-    database: keys.pgDatabase,
-    host: keys.pgHost,
-    port: keys.pgPort
-});
-pgClient.on('error', () => console.error('Lost PG connection'));
+let pgClient;
 
-pgClient
-    .query('CREATE TABLE IF NOT EXISTS values (number INT)')
-    .catch(console.error);
+setTimeout(() => {
+    pgClient = new Pool({
+        user: keys.pgUser,
+        password: keys.pgPassword,
+        database: keys.pgDatabase,
+        host: keys.pgHost,
+        port: keys.pgPort
+    });
+    pgClient.on('error', () => console.error('Lost PG connection'));
+    pgClient
+        .query('CREATE TABLE IF NOT EXISTS values (number INT)')
+        .then(res => console.log("Created postgres table successfully...", res))
+        .catch(console.error);
+}, 30000);
+
 
 // Redis Client Setup
 const redis = require('redis');
